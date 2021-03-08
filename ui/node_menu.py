@@ -1,13 +1,13 @@
 import bpy
 from animation_nodes.ui.node_menu import insertNode
 
-class TestExtensionMenu(bpy.types.Menu):
-    bl_idname = "AN_MT_test_extension_menu"
-    bl_label = "Test Extension Menu"
+class AiekickNodesMenu(bpy.types.Menu):
+    bl_idname = "AN_MT_AiekickNodes_menu"
+    bl_label = "Aiekick Nodes"
 
     def draw(self, context):
         layout = self.layout
-        insertNode(layout, "an_TestExtensionNode", "Test Extension Node")
+        insertNode(layout, "an_FibonacciMappingNode", "Fibonacci Mapping")
 
 def drawMenu(self, context):
     if context.space_data.tree_type != "an_AnimationNodeTree": return
@@ -16,7 +16,7 @@ def drawMenu(self, context):
     layout.operator_context = "INVOKE_DEFAULT"
 
     layout.separator()
-    layout.menu("AN_MT_test_extension_menu", text = "Test Extension Menu", icon = "SCRIPTPLUGINS")
+    layout.menu("AN_MT_AiekickNodes_menu", text = "Aiekick Nodes", icon = "SCRIPTPLUGINS")
 
 def register():
     bpy.types.NODE_MT_add.append(drawMenu)
