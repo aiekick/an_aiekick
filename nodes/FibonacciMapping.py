@@ -7,24 +7,24 @@ class FibonacciMappingNode(bpy.types.Node, AnimationNode):
     bl_idname = "an_FibonacciMappingNode"
     bl_label = "Fibonacci Mapping"
 
-    useX = BoolProperty(name = "Use X", default = False, update = propertyChanged)
-    useY = BoolProperty(name = "Use Y", default = False, update = propertyChanged)
-    useZ = BoolProperty(name = "Use Z", default = False, update = propertyChanged)
-
+    count = FloatProperty(name = "Count", default = False, update = propertyChanged)
+    radius = FloatProperty(name = "Radius", default = False, update = propertyChanged)
+    
     def create(self):
-        self.newInput("Object", "Source", "source")
-        self.newInput("Object", "Target", "target")
-        self.newInput("Vector", "Offset", "offset")
-
+        self.newInput("Float", "count", "count")
+        self.newInput("Float", "radius", "radius")
+        
     def draw(self, layout):
-        layout.prop(self, "useX")
-        layout.prop(self, "useY")
-        layout.prop(self, "useZ")
+        layout.prop(self, "count")
+        layout.prop(self, "radius")
 
-    def execute(self, source, target, offset):
-        if source is None or target is None:
-            return
-
-        if self.useX: target.location.x = source.location.x + offset.x
-        if self.useY: target.location.y = source.location.y + offset.y
-        if self.useZ: target.location.z = source.location.z + offset.z
+    def execute(self, count, radius,):
+        rnd = 1.;
+        offset = 2. / count;
+        increment = PI * (3. - sqrt(5.));
+        y = ((i * offset) - 1.) + (offset / 2.);
+        r = sqrt(1. - pow(y ,2.));
+        phi = mod(i + rnd, count) * increment;
+        x = cos(phi) * r;
+        z = sin(phi) * r;
+        return vec3(x, y, z);
